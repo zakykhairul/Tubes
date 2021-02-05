@@ -1,0 +1,156 @@
+
+ Begin
+ menu_login:
+write(Layar)"==== ATM BRZ ===="
+ write(Layar)"Silahkan Masukan Nomor Rekening anda : "
+ read(Keyboard) norek
+ write(Layar)"Silahkan Masukkan PIN anda : " ch <-- _getch()
+ 	while(ch !=13) do
+  	pin.push_back(ch)
+  	write(Layar)'*'
+  	ch <-- _getch()
+    endwhile
+    
+ 	for (int i = 0; i <= 2; i++) do
+ 	if (user[i][0] = norek AND user[i][1] = pin) then
+ 	  nama <-- user [i][2]
+ 	  system(Hapus layar)
+ 	  move to menu_utama
+    endif
+  	else if (user[i][0] != norek && user [i][1] != pin)
+ 	    write(Layar)"Maaf Akun Tidak Ditemukan"
+ 	    Exit Program
+      endif
+  endfor
+ 	
+menu_utama:
+if(nama ="Zaky Khairul") then
+  write(Layar)"Anda login sebagai Zaky Khairul")
+  else if(nama ="Sarah Dewi") then
+    write(Layar)"Anda login sebagi Sarah Dewi")
+    else if(nama ="Hafiz Firdausi") then
+      write(Layar)"Anda login sebagai Hafiz Firdausi")
+      else Exit Program
+      endif
+    endif
+  endif
+  
+write(Layar)"==== SELAMAT DATANG DI ATM BRZ ===="
+write(Layar)"1.TARIK TUNAI"
+write(Layar)"2.TRANSFER TUNAI"
+write(Layar)"3.CEK SALDO"
+write(Layar)"4.EXIT"
+write(Layar)"Silahkan input menu yang ingin dipilih : "
+read(Keyboard) menu_utama
+system(Hapus Layar)
+
+case (menu_utama) of:
+	case 1 :
+		menu1:
+		write(Layar)"\n\n\t\t==== TARIK TUNAI ====\n\n"
+		write(Layar)"Masukkan Nominal Uang yang Ingin Ditarik (Kelipatan Rp.50.000,-): Rp."
+    read(Keyboard) tarik
+		if( tarik < 50000 OR tarik > 1000000 OR tarik mod 50000 != 0) then
+			write(Layar)"\nBatas minimal tarik tunai sebesar Rp.50.000,- dan maksimal sebesar Rp.1.000.000,- dan kelipatan Rp.50.000,-"
+			goto menu1;
+			else if(tarik > 10000000) then
+				write(Layar)"Batas Penarikan Tunai dalam sehari adalah Rp.1.000.000,-"
+				move to menu1
+				else if(saldo < tarik) then
+					write(Layar)"Maaf Saldo Anda Tidak Mencukupi"
+					move to menu1	
+					else saldo <-- saldo - tarik
+					write(Layar)"Transaksi Berhasil"
+          endif
+        endif
+      endif
+					write(Layar)"Sisa saldo anda adalah Rp.%d ",saldo
+					lembar <-- tarik / 50000	
+					write(Layar)"Silahkan Ambil Uang Anda dengan Pecahan Rp.50.000,- sebanyak %d lembar",lembar
+			    write(Layar)"Apakah Anda Ingin Kembali ke Menu Utama?"
+			    write(Layar)"Tekan Y/t untuk YA atau Tekan T/t untuk TIDAK : "
+          read(Keyboard) k
+			    system(Hapus Layar)
+			    if (k = "Y" OR k = "y") then move to menu_utama
+				    else if (k = "T" OR k = "t") then
+				     move to keluar
+             endif
+           endif
+					
+	case 2 :
+		menu2:
+		write(Layar)"==== TRANSFER TUNAI ===="
+		write(Layar)"Masukkan Nomor Rekening Tujuan : " 
+    read(Keyboard) norek1
+		if(norek1 = norek) then
+			write(Layar)"Maaf, Anda Tidak Bisa Memasukkan Nomor Rekening Anda Sendiri"
+			move to menu2
+		  else if(norek1 = "191711032") then
+			  write(Layar)"Nomor Rekening Tujuan Anda Adalah 191711032"
+			  write(Layar)"Atas Nama ZAKY KHAIRUL"
+			  move to transfer
+		    else if(norek1 = "191711026") then
+			    write(Layar)"Nomor Rekening Tujuan Anda Adalah 191711026")
+			    write(Layar)"Atas Nama SARAH DEWI"
+			    move to transfer
+		      else if(norek1 = "191711017") then
+			      write(Layar)"Nomor Rekening Tujuan Anda Adalah 191711017"
+			      write(Layar)"Atas Nama HAFIZ FIRDAUSI"
+			      move to transfer
+            endif
+          endif
+        endif
+      endif 
+		else write(Layar)"Nomor Rekening Tidak Ditemukan"
+		move to menu2
+		transfer:
+		write(Layar)"Masukkan Nominal Transfer : Rp." 
+    read(Keyboard) transfer
+		if (transfer > saldo) then
+		write(Layar)"Saldo Anda Tidak Mencukupi"
+		move to transfer
+			else if (transfer < 20000) then
+			write(Layar)"Minimal Transfer Sebesar Rp.20.000,-"
+			goto transfer
+      endif
+    endif
+		  else write(Layar)"Anda Mentransfer Sebesar Rp.%d,- Apakah Benar?",transfer
+			  write(Layar)"Tekan Y/y untuk YA atau Tekan T/t untuk TIDAK : ";
+        read(Keyboard) x
+		if(x = "Y" OR x = "y") then
+			write(Layar)"Transaksi Berhasil"
+			saldo <-- saldo - transfer
+			write(Layar)"Sisa saldo anda = Rp.%d,-",saldo
+			else if(x = "T" OR x = "t") then
+				move to menu2
+		write(Layar)"Apakah Anda Ingin Kembali ke Menu Utama?"
+			write(Layar)"Tekan Y/t untuk YA atau Tekan T/t untuk TIDAK : "
+      read(Keyboard)k
+      endif
+    endif
+			system(Hapus Layar)
+			if (k = "Y" OR k = "y") then goto menu_utama
+				else if (k = "T" OR k = "t") 
+				  goto keluar
+          endif
+        endif
+					
+	case 3 :
+		menu3:
+		write(Layar)"==== CEK SALDO ===="
+		write(Layar)"Saldo Anda Sebesar : Rp.%d,-",saldo
+		write(Layar)"Apakah Anda Ingin Kembali ke Menu Utama?"
+			write(Layar)"Tekan Y/t untuk YA atau Tekan T/t untuk TIDAK : "
+      read(Keyboard)k
+			system("cls")
+			if (k = "Y" OR k = "y") then goto menu_utama
+				else if (k = "T" OR k = "t") 
+				  goto keluar
+          endif
+        endif
+				
+	case 4 :
+		keluar:
+		write(Layar)"==== TERIMAKASIH TELAH MENGGUNAKAN ATM BRZ ===="
+		Exit Program
+End Program
